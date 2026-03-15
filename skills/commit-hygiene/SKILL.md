@@ -11,6 +11,11 @@ Any commit creation, review, or branch cleanup.
 type(scope): description
 ```
 
+Validated by regex:
+```
+^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9\._-]+\))?!?: .+
+```
+
 ## Valid Types
 
 | Type | Use For |
@@ -22,6 +27,10 @@ type(scope): description
 | refactor | Restructuring without behavior change |
 | test | Adding or fixing tests |
 | ci | CI/CD pipeline changes |
+| style | Formatting, whitespace, no logic change |
+| perf | Performance improvement |
+| build | Build system, Makefile changes |
+| revert | Reverting a previous commit |
 
 ## Valid Scopes for GGA
 

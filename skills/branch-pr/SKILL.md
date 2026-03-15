@@ -7,7 +7,11 @@ Standardize branch creation and PR submission for the GGA project.
 When creating a pull request, opening a PR, or preparing changes for review.
 
 ## Branch Naming
-Format: `type/short-description`
+Format: `type/description` — validated by regex:
+
+```
+^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)\/[a-z0-9._-]+$
+```
 
 | Type | Example |
 |------|---------|
@@ -18,6 +22,12 @@ Format: `type/short-description`
 | refactor | `refactor/cache-lookup` |
 | test | `test/integration-ci-mode` |
 | ci | `ci/split-test-jobs` |
+| style | `style/output-formatting` |
+| perf | `perf/cache-lookup-speed` |
+| build | `build/makefile-targets` |
+| revert | `revert/broken-hook-change` |
+
+**Rules**: description must be lowercase, only `a-z`, `0-9`, `.`, `_`, `-`.
 
 ## PR Workflow
 
@@ -28,11 +38,18 @@ Format: `type/short-description`
 5. Create PR: `gh pr create --title "type(scope): description" --body "..."`
 
 ## PR Title Format
-`type(scope): description` — must match conventional commits exactly.
+Must match conventional commits regex:
+
+```
+^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9\._-]+\))?!?: .+
+```
 
 Valid scopes: `providers`, `hooks`, `cache`, `cli`, `ci`, `config`, `install`
 
-Example: `feat(providers): add GitHub Models provider support`
+Examples:
+- `feat(providers): add GitHub Models provider support`
+- `fix: crash on startup`
+- `fix!: change hook marker format`
 
 ## PR Body Template
 ```
