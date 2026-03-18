@@ -16,6 +16,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            // Skip dependabot PRs - they're automated
+            const author = context.payload.pull_request.user.login;
+            if (author === 'dependabot[bot]' || author === 'dependabot') {
+              core.notice('⊘ Skipping dependabot PR');
+              return;
+            }
+
             const body = context.payload.pull_request.body || '';
             const pattern = /(?:closes|fixes|resolves)\s+#(\d+)/gi;
             const match = pattern.exec(body);
@@ -44,11 +51,19 @@ jobs:
     name: Check Issue Has status:approved
     runs-on: ubuntu-latest
     needs: check-issue-reference
+    if: needs.check-issue-reference.result != 'skipped'
     steps:
       - name: Verify issue is approved
         uses: actions/github-script@v7
         with:
           script: |
+            // Skip dependabot PRs - they're automated
+            const author = context.payload.pull_request.user.login;
+            if (author === 'dependabot[bot]' || author === 'dependabot') {
+              core.notice('⊘ Skipping dependabot PR');
+              return;
+            }
+
             const body = context.payload.pull_request.body || '';
             const pattern = /(?:closes|fixes|resolves)\s+#(\d+)/gi;
             const match = pattern.exec(body);
